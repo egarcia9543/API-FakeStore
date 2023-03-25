@@ -1,50 +1,72 @@
 const productsContainer = document.getElementById("productos");
-const buttonsContainer = document.getElementById("buttons");
+const buttonPrev = document.querySelector("#previous");
+const buttonNext = document.querySelector("#next");
+
+let offset = 1;
+let limit = 9;
+
+
+buttonPrev.addEventListener("click", () => {
+    if (offset != 1) {
+        offset -= 10;
+        removeChilds(productsContainer);
+        fetchProductos(offset, limit);
+    }
+})
+
+buttonNext.addEventListener("click", () => {
+    offset += 10;
+    removeChilds(productsContainer);
+    fetchProductos(offset, limit);
+})
+
 //Traer todos los productos
-function fetchProduct() {
-    fetch('https://api.escuelajs.co/api/v1/products')
-    .then(res => res.json())
-    .then(data => {
-        createProduct(data)
-        let totalProductos = data.length;
+function fetchProduct(id) {
+    fetch(`https://fakestoreapi.com/products/${id}`)
+        .then(res => res.json())
+        .then(data => {
+            createProduct(data);
+        })
+}
 
-        const itemsPerPage = 20;
-
-        let numberOfPages = totalProductos/itemsPerPage
-        for (let i = 1; i < numberOfPages+1; i++){
-            let buttonPage = document.createElement("button");
-            buttonPage.textContent = i;
-            buttonsContainer.appendChild(buttonPage);
-        }
-    })
+function fetchProductos(offset, limit) {
+    for (let i = offset; i <= offset + limit; i++) {
+        fetchProduct(i)
+    }
 }
 
 //
 
 function createProduct(productos) {
-    productos.forEach(producto => {
-        let productCard = document.createElement("div");
-        productCard.classList.add("product__card");
+    let productCard = document.createElement("div");
+    productCard.classList.add("product__card");
 
-        let image = document.createElement("img");
-        image.classList.add("product__img")
-        image.src = producto.images[0]
+    let image = document.createElement("img");
+    image.classList.add("product__img")
+    image.src = productos.image
 
-        let infoContainer = document.createElement("div");
-        infoContainer.classList.add("product__info");
+    let infoContainer = document.createElement("div");
+    infoContainer.classList.add("product__info");
 
-        let price = document.createElement("p");
-        price.innerText = `$ ${producto.price}`
-        price.classList.add("product__price");
+    let price = document.createElement("p");
+    price.innerText = `$ ${productos.price}`
+    price.classList.add("product__price");
 
-        let name = document.createElement("p");
-        name.innerText = producto.title
+    let name = document.createElement("p");
+    name.innerText = productos.title
 
-        infoContainer.appendChild(name);
+    infoContainer.appendChild(name);
 
-        productCard.appendChild(image);
-        productCard.appendChild(infoContainer);
-        productCard.appendChild(price);
-        productsContainer.appendChild(productCard);
-    });
+    productCard.appendChild(image);
+    productCard.appendChild(infoContainer);
+    productCard.appendChild(price);
+    productsContainer.appendChild(productCard);
 }
+
+function removeChilds (parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+fetchProductos(offset, limit);
