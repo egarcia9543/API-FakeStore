@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        let titulo = document.getElementById("title");
+        let precio = document.getElementById("price");
+        let descripcion = document.getElementById("description");
+        let categoria = document.getElementById("category");
+
+
+        function addNewProduct() {
+            fetch('https://fakestoreapi.com/products', {
+                method: "POST",
+                body: JSON.stringify(
+                    {
+                        title: titulo,
+                        price: precio,
+                        description: descripcion,
+                        image: 'https://i.pravatar.cc',
+                        category: categoria
+                    }
+                )
+            })
+                .then(res => res.json())
+                .then(json => console.log(json))
+        }
+
+        function updateProduct() {
+            fetch('https://fakestoreapi.com/products/7',{
+            method:"PUT",
+            body:JSON.stringify(
+                {
+                    title: 'test product',
+                    price: 13.5,
+                    description: 'lorem ipsum set',
+                    image: 'https://i.pravatar.cc',
+                    category: 'electronic'
+                }
+            )
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+        }
+    </script>
+</head>
+
+<body>
+    <form action="">
+        <label for="title">Título</label>
+        <input type="text" id="title" class="input">
+
+        <label for="price">Precio</label>
+        <input type="number" id="price" class="input">
+
+        <label for="description">Descripcion</label>
+        <input type="text" id="description" class="input">
+
+        <label for="category">Categoría</label>
+        <input type="text" id="category" class="input">
+    </form>
+    <br>
+    <button onclick="addNewProduct()">Crear</button>
+    <button onclick="ver()">Actualizar</button>
+    <button>Eliminar</button>
+</body>
+
+</html>
