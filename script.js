@@ -1,5 +1,3 @@
-let id = document.getElementById("nombre").value;
-
 //Contenedor para insertar los elementos
 //let tableContainer = document.getElementById("tableContainer");
 
@@ -13,8 +11,7 @@ function fetchProduct() {
 }
 
 function createProductCard(productos) {
-    //let tableContainer = document.getElementById("tableContainer");
-    let i = 1
+    let tableContainer = document.getElementById("tableContainer");
     productos.forEach(producto => {
 
         let tableRow = document.createElement("tr");
@@ -32,7 +29,7 @@ function createProductCard(productos) {
         categoria.innerText = producto.category
 
         let buttonsContainer = document.createElement("td");
-        buttonsContainer.innerHTML = `<button onclick = "updateProduct(${i})">Actualizar</button> <button onclick = "deleteProduct(${i})">Eliminar</button>`
+        buttonsContainer.innerHTML = `<button onclick = "updateProduct(${producto.id})">Actualizar</button> <button onclick = "deleteProduct(${producto.id})">Eliminar</button>`
 
         tableContainer.appendChild(tableRow);
 
@@ -41,33 +38,45 @@ function createProductCard(productos) {
         tableRow.appendChild(description);
         tableRow.appendChild(categoria);
         tableRow.appendChild(buttonsContainer)
-        i++
     });
 }
 
-function updateProduct (id){
-    const succes = document.querySelector(".alert");
-    fetch(`https://fakestoreapi.com/products/${id}`,{
-            method:"PUT",
-            body:JSON.stringify(
-                {
-                    title: 'test product',
-                    price: 13.5,
-                    description: 'lorem ipsum set',
-                    image: 'https://i.pravatar.cc',
-                    category: 'electronic'
-                }
-            )
-        })
-            .then(res=>res.json())
-            .then(json=>console.log(json))
-            .then(succes.classList.remove("hidden"))
+function updateProduct(id) {
+    const succes = document.querySelector(".alert-success");
+    fetch(`https://fakestoreapi.com/products/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(
+            {
+                title: 'test product',
+                price: 13.5,
+                description: 'lorem ipsum set',
+                image: 'https://i.pravatar.cc',
+                category: 'electronic'
+            }
+        )
+    })
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .then(succes.classList.remove("hidden"))
 }
 
-function deleteProduct (id) {
-    fetch(`https://fakestoreapi.com/products/${id}`,{
-            method:"DELETE"
-        })
-            .then(res=>res.json())
-            .then(json=>console.log(json))
+function deleteProduct(id) {
+    const deleteSucces = document.querySelector(".alert-danger")
+    fetch(`https://fakestoreapi.com/products/${id}`, {
+        method: "DELETE"
+    })
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .then(deleteSucces.classList.remove("hidden"))
 }
+
+function closeD() {
+    let deleteSucces = document.querySelector(".alert-danger");
+    deleteSucces.classList.add("hidden");
+}
+
+function closeS() {
+    let succes = document.querySelector(".alert-success");
+    succes.classList.add("hidden")
+}
+

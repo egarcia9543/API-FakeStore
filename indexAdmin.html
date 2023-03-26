@@ -1,42 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
+	<style>
 		body {
 			padding: 0;
 			margin: 0;
 		}
+
 		table {
 			border-collapse: collapse;
 			width: 100%;
 			margin-bottom: 20px;
 		}
-		th, td {
+
+		th,
+		td {
 			text-align: left;
 			padding: 8px;
 			border-bottom: 1px solid #ddd;
 		}
+
 		th {
 			background-color: #4CAF50;
 			color: white;
 		}
+
 		tr:hover {
 			background-color: #f5f5f5;
 		}
+
+		div.alert {
+			margin: 10px 0;
+			display: flex;
+			justify-content: space-between;
+		}
 	</style>
 </head>
+
 <body onload="fetchProduct()">
-    <div class="alert alert-success hidden">
-		<strong>Producto modificado exitosamente</strong>
+	<div>
+		<label for="title">Título</label>
+		<input type="text" id="title">
+
+		<label for="price">Precio</label>
+		<input type="text" id="price">
+
+		<label for="description">Descripción</label>
+		<input type="text" id="description">
+
+		<label for="category">Categoría</label>
+		<input type="text" id="category">
+
+		<button onclick="addNewProduct()">Agregar</button>
 	</div>
+
+	<div class="alert alert-success hidden">
+		<strong>Producto modificado exitosamente</strong>
+		<button onclick="closeS()">x</button>
+	</div>
+
+	<div class="alert alert-danger hidden">
+		<strong>Producto eliminado correctamente</strong>
+		<button onclick="closeD()">x</button>
+	</div>
+
 	<table>
 		<thead>
 			<tr>
