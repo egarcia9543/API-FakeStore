@@ -32,7 +32,7 @@ function createProductCard(productos) {
         categoria.innerText = producto.category
 
         let buttonsContainer = document.createElement("td");
-        buttonsContainer.innerHTML = `<button onclick = "updateProduct(${i})">Actualizar</button> <button>Eliminar</button>`
+        buttonsContainer.innerHTML = `<button onclick = "updateProduct(${i})">Actualizar</button> <button onclick = "deleteProduct(${i}">Eliminar</button>`
 
         tableContainer.appendChild(tableRow);
 
@@ -57,6 +57,14 @@ function updateProduct (id){
                     category: 'electronic'
                 }
             )
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+}
+
+function deleteProduct (id) {
+    fetch(`https://fakestoreapi.com/products/${id}`,{
+            method:"DELETE"
         })
             .then(res=>res.json())
             .then(json=>console.log(json))
