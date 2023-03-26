@@ -14,7 +14,9 @@ function fetchProduct() {
 
 function createProductCard(productos) {
     //let tableContainer = document.getElementById("tableContainer");
+    let i = 1
     productos.forEach(producto => {
+
         let tableRow = document.createElement("tr");
 
         let title = document.createElement("td");
@@ -29,11 +31,33 @@ function createProductCard(productos) {
         let categoria = document.createElement("td");
         categoria.innerText = producto.category
 
+        let buttonsContainer = document.createElement("td");
+        buttonsContainer.innerHTML = `<button onclick = "updateProduct(${i})">Actualizar</button> <button>Eliminar</button>`
+
         tableContainer.appendChild(tableRow);
 
         tableRow.appendChild(title);
         tableRow.appendChild(price);
         tableRow.appendChild(description);
         tableRow.appendChild(categoria);
+        tableRow.appendChild(buttonsContainer)
+        i++
     });
+}
+
+function updateProduct (id){
+    fetch(`https://fakestoreapi.com/products/${id}`,{
+            method:"PUT",
+            body:JSON.stringify(
+                {
+                    title: 'test product',
+                    price: 13.5,
+                    description: 'lorem ipsum set',
+                    image: 'https://i.pravatar.cc',
+                    category: 'electronic'
+                }
+            )
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
 }
