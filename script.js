@@ -1,6 +1,3 @@
-//Contenedor para insertar los elementos
-//let tableContainer = document.getElementById("tableContainer");
-
 
 function fetchProduct() {
     fetch('https://fakestoreapi.com/products')
@@ -68,6 +65,28 @@ function deleteProduct(id) {
         .then(res => res.json())
         .then(json => console.log(json))
         .then(deleteSucces.classList.remove("hidden"))
+}
+
+
+function addNewProduct(id) {
+    let productTitle = document.getElementById("title").value;
+    let productPrice = document.getElementById("price").value;
+    let productDescription = document.getElementById("description").value;
+    let productCategory = document.getElementById("category").value;
+    fetch('https://fakestoreapi.com/products', {
+        method: "POST",
+        body: JSON.stringify(
+            {
+                title: productTitle,
+                price: productPrice,
+                description: productDescription,
+                image: 'https://i.pravatar.cc',
+                category: productCategory
+            }
+        )
+    })
+        .then(res => res.json())
+        .then(json => console.log(json))
 }
 
 function closeD() {

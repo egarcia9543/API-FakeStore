@@ -1,16 +1,14 @@
-let usuario = document.getElementById("username").value;
-let contrasenia = document.getElementById("password").value;
-
 function login() {
-    fetch('https://fakestoreapi.com/auth/login', {
+    fetch('https://api.escuelajs.co/api/v1/auth/login', {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
-            username: usuario,
-            password: contrasenia
+            email: "admin@mail.com",
+            password: "admin123"
         })
     })
         .then(res => res.json())
         .then(json => console.log(json))
 }
-
-
